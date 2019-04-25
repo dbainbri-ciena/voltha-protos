@@ -4,7 +4,7 @@ TOP Level BBF Fiber proto
 
 syntax = "proto3";
 
-option go_package = "github.com/opencord/voltha-protos/go/bbf_fiber";
+option go_package = "github.com/dbainbri-ciena/voltha-protos/go/bbf_fiber";
 
 package bbf_fiber;
 import "voltha_protos/bbf_fiber_base.proto";
