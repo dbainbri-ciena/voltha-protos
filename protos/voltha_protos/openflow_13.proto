@@ -57,7 +57,7 @@
  */
 syntax = "proto3";
 
-option go_package = "github.com/dbainbri-ciena/voltha-protos/go/openflow_13";
+option go_package = "gopkg.in/dbainbri-ciena/voltha-protos.v1/go/openflow_13";
 
 package openflow_13;
 

@@ -15,7 +15,7 @@
 //
 syntax = "proto3";
 
-option go_package = "github.com/dbainbri-ciena/voltha-protos/go/omci";
+option go_package = "gopkg.in/dbainbri-ciena/voltha-protos.v1/go/omci";
 
 package omci;
 
