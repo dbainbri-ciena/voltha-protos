@@ -2,7 +2,7 @@ syntax = "proto3";
 
 option go_package = "gopkg.in/dbainbri-ciena/voltha-protos.v2/go/voltha";
 
-package voltha;
+package voltha_v2;
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";

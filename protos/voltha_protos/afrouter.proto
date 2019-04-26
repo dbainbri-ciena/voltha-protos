@@ -4,7 +4,7 @@ syntax = "proto3";
 
 option go_package = "gopkg.in/dbainbri-ciena/voltha-protos.v2/go/afrouter";
 
-package afrouter;
+package afrouter_v2;
 
 service Configuration {
     	rpc SetConnection (Conn) returns (Result) {}

@@ -8,7 +8,7 @@ syntax = "proto3";
 
 option go_package = "gopkg.in/dbainbri-ciena/voltha-protos.v2/go/voltha";
 
-package voltha;
+package voltha_v2;
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
@@ -44,7 +44,7 @@ message DeviceGroups {
 
 
 message AlarmFilterRuleKey {
-    option (common.yang_child_rule) = MOVE_TO_PARENT_LEVEL;
+    option (common_v2.yang_child_rule) = MOVE_TO_PARENT_LEVEL;
 
     enum AlarmFilterRuleKey {
         id = 0;
@@ -71,14 +71,14 @@ message AlarmFilters {
 }
 
 message Logging {
-    common.LogLevel.LogLevel level = 1;
+    common_v2.LogLevel.LogLevel level = 1;
     string package_name = 2;
 }
 
 // CoreInstance represents a core instance.  It is data held in memory when a core
 // is running.  This data is not persistent.
 message CoreInstance {
-    option (common.yang_message_rule) = CREATE_BOTH_GROUPING_AND_CONTAINER;
+    option (common_v2.yang_message_rule) = CREATE_BOTH_GROUPING_AND_CONTAINER;
 
     string instance_id = 1  [(access) = READ_ONLY];
 
@@ -87,7 +87,7 @@ message CoreInstance {
 }
 
 message CoreInstances {
-    option (common.yang_message_rule) = CREATE_BOTH_GROUPING_AND_CONTAINER;
+    option (common_v2.yang_message_rule) = CREATE_BOTH_GROUPING_AND_CONTAINER;
     repeated CoreInstance items = 1;
 }
 
@@ -95,7 +95,7 @@ message CoreInstances {
 // the entire cluster. However, some items (e.g. adapters) will be held by all cores
 // for better performance
 message Voltha {
-    option (common.yang_message_rule) = CREATE_BOTH_GROUPING_AND_CONTAINER;
+    option (common_v2.yang_message_rule) = CREATE_BOTH_GROUPING_AND_CONTAINER;
 
     string version = 1 [(access) = READ_ONLY];
 
@@ -112,17 +112,17 @@ message Voltha {
     repeated AlarmFilter alarm_filters = 7 [(child_node) = {key: "id"}];
 
     repeated
-        omci.MibDeviceData omci_mib_database = 28
+        omci_v2.MibDeviceData omci_mib_database = 28
         [(child_node) = {key: "device_id"}];
 
     repeated
-        omci.AlarmDeviceData omci_alarm_database = 29
+        omci_v2.AlarmDeviceData omci_alarm_database = 29
         [(child_node) = {key: "device_id"}];
 }
 
 // Device Self Test Response
 message SelfTestResponse {
-    option (common.yang_child_rule) = MOVE_TO_PARENT_LEVEL;
+    option (common_v2.yang_child_rule) = MOVE_TO_PARENT_LEVEL;
 
 	enum SelfTestResult  {
 	    SUCCESS = 0;
@@ -190,12 +190,12 @@ service VolthaService {
         option (google.api.http) = {
             get: "/api/v1/instances"
         };
-        option (common.yang_xml_tag).xml_tag = 'items';
-        option (common.yang_xml_tag).list_items_name = 'items';
+        option (common_v2.yang_xml_tag).xml_tag = 'items';
+        option (common_v2.yang_xml_tag).list_items_name = 'items';
     }
 
     // Get details on a Voltha cluster instance
-    rpc GetCoreInstance(common.ID) returns(CoreInstance) {
+    rpc GetCoreInstance(common_v2.ID) returns(CoreInstance) {
         option (google.api.http) = {
             get: "/api/v1/instances/{id}"
         };
@@ -206,7 +206,7 @@ service VolthaService {
         option (google.api.http) = {
             get: "/api/v1/adapters"
         };
-        option (common.yang_xml_tag).xml_tag = 'adapters';
+        option (common_v2.yang_xml_tag).xml_tag = 'adapters';
     }
 
 
@@ -215,22 +215,22 @@ service VolthaService {
         option (google.api.http) = {
             get: "/api/v1/logical_devices"
         };
-        option (common.yang_xml_tag).xml_tag = 'logical_devices';
+        option (common_v2.yang_xml_tag).xml_tag = 'logical_devices';
     }
 
     // Get additional information on a given logical device
-    rpc GetLogicalDevice(common.ID) returns(LogicalDevice) {
+    rpc GetLogicalDevice(common_v2.ID) returns(LogicalDevice) {
         option (google.api.http) = {
             get: "/api/v1/logical_devices/{id}"
         };
     }
 
     // List ports of a logical device
-    rpc ListLogicalDevicePorts(common.ID) returns(LogicalPorts) {
+    rpc ListLogicalDevicePorts(common_v2.ID) returns(LogicalPorts) {
         option (google.api.http) = {
             get: "/api/v1/logical_devices/{id}/ports"
         };
-        option (common.yang_xml_tag).xml_tag = 'ports';
+        option (common_v2.yang_xml_tag).xml_tag = 'ports';
     }
 
     // Gets a logical device port
@@ -238,7 +238,7 @@ service VolthaService {
         option (google.api.http) = {
             get: "/api/v1/logical_devices/{id}/ports/{port_id}"
         };
-        option (common.yang_xml_tag).xml_tag = 'port';
+        option (common_v2.yang_xml_tag).xml_tag = 'port';
     }
 
     // Enables a logical device port
@@ -256,16 +256,16 @@ service VolthaService {
     }
 
     // List all flows of a logical device
-    rpc ListLogicalDeviceFlows(common.ID) returns(openflow_13.Flows) {
+    rpc ListLogicalDeviceFlows(common_v2.ID) returns(openflow_13_v2.Flows) {
         option (google.api.http) = {
             get: "/api/v1/logical_devices/{id}/flows"
         };
-        option (common.yang_xml_tag).xml_tag = 'flows';
-        option (common.yang_xml_tag).list_items_name = 'items';
+        option (common_v2.yang_xml_tag).xml_tag = 'flows';
+        option (common_v2.yang_xml_tag).list_items_name = 'items';
     }
 
     // Update flow table for logical device
-    rpc UpdateLogicalDeviceFlowTable(openflow_13.FlowTableUpdate)
+    rpc UpdateLogicalDeviceFlowTable(openflow_13_v2.FlowTableUpdate)
             returns(google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/api/v1/logical_devices/{id}/flows"
@@ -274,7 +274,7 @@ service VolthaService {
     }
 
     // Update meter table for logical device
-    rpc UpdateLogicalDeviceMeterTable(openflow_13.MeterModUpdate)
+    rpc UpdateLogicalDeviceMeterTable(openflow_13_v2.MeterModUpdate)
             returns(google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/api/v1/logical_devices/{id}/meters"
@@ -283,24 +283,24 @@ service VolthaService {
     }
 
     // Get all meter stats for logical device
-    rpc GetMeterStatsOfLogicalDevice(common.ID)
-            returns(openflow_13.MeterStatsReply) {
+    rpc GetMeterStatsOfLogicalDevice(common_v2.ID)
+            returns(openflow_13_v2.MeterStatsReply) {
         option (google.api.http) = {
             get: "/api/v1/logical_devices/{id}/meters_stats"
         };
     }
 
     // List all flow groups of a logical device
-    rpc ListLogicalDeviceFlowGroups(common.ID) returns(openflow_13.FlowGroups) {
+    rpc ListLogicalDeviceFlowGroups(common_v2.ID) returns(openflow_13_v2.FlowGroups) {
         option (google.api.http) = {
             get: "/api/v1/logical_devices/{id}/flow_groups"
         };
-        option (common.yang_xml_tag).xml_tag = 'flow_groups';
-        option (common.yang_xml_tag).list_items_name = 'items';
+        option (common_v2.yang_xml_tag).xml_tag = 'flow_groups';
+        option (common_v2.yang_xml_tag).list_items_name = 'items';
     }
 
     // Update group table for device
-    rpc UpdateLogicalDeviceFlowGroupTable(openflow_13.FlowGroupTableUpdate)
+    rpc UpdateLogicalDeviceFlowGroupTable(openflow_13_v2.FlowGroupTableUpdate)
             returns(google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/api/v1/logical_devices/{id}/flow_groups"
@@ -313,20 +313,20 @@ service VolthaService {
         option (google.api.http) = {
             get: "/api/v1/devices"
         };
-        option (common.yang_xml_tag).xml_tag = 'devices';
+        option (common_v2.yang_xml_tag).xml_tag = 'devices';
     }
 
     // List all physical devices IDs controlled by the Voltha cluster
-    rpc ListDeviceIds(google.protobuf.Empty) returns(common.IDs) {
+    rpc ListDeviceIds(google.protobuf.Empty) returns(common_v2.IDs) {
         option (google.api.http) = {
             get: "/api/v1/deviceids"
         };
-        option (common.yang_xml_tag).xml_tag = 'id';
-        option (common.yang_xml_tag).list_items_name = 'items';
+        option (common_v2.yang_xml_tag).xml_tag = 'id';
+        option (common_v2.yang_xml_tag).list_items_name = 'items';
     }
 
     // Request to a voltha Core to reconcile a set of devices based on their IDs
-    rpc ReconcileDevices(common.IDs) returns(google.protobuf.Empty) {
+    rpc ReconcileDevices(common_v2.IDs) returns(google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/api/v1/deviceids"
             body: "*"
@@ -334,7 +334,7 @@ service VolthaService {
     }
 
     // Get more information on a given physical device
-    rpc GetDevice(common.ID) returns(Device) {
+    rpc GetDevice(common_v2.ID) returns(Device) {
         option (google.api.http) = {
             get: "/api/v1/devices/{id}"
         };
@@ -351,28 +351,28 @@ service VolthaService {
     // Enable a device.  If the device was in pre-provisioned state then it
     // will transition to ENABLED state.  If it was is DISABLED state then it
     // will transition to ENABLED state as well.
-    rpc EnableDevice(common.ID) returns(google.protobuf.Empty) {
+    rpc EnableDevice(common_v2.ID) returns(google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/api/v1/devices/{id}/enable"
         };
     }
 
     // Disable a device
-    rpc DisableDevice(common.ID) returns(google.protobuf.Empty) {
+    rpc DisableDevice(common_v2.ID) returns(google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/api/v1/devices/{id}/disable"
         };
     }
 
     // Reboot a device
-    rpc RebootDevice(common.ID) returns(google.protobuf.Empty) {
+    rpc RebootDevice(common_v2.ID) returns(google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/api/v1/devices/{id}/reboot"
         };
     }
 
     // Delete a device
-    rpc DeleteDevice(common.ID) returns(google.protobuf.Empty) {
+    rpc DeleteDevice(common_v2.ID) returns(google.protobuf.Empty) {
         option (google.api.http) = {
             delete: "/api/v1/devices/{id}/delete"
         };
@@ -381,7 +381,7 @@ service VolthaService {
     // Request an image download to the standby partition
     // of a device.
     // Note that the call is expected to be non-blocking.
-    rpc DownloadImage(ImageDownload) returns(common.OperationResp) {
+    rpc DownloadImage(ImageDownload) returns(common_v2.OperationResp) {
         option (google.api.http) = {
             post: "/api/v1/devices/{id}/image_downloads/{name}"
             body: "*"
@@ -404,14 +404,14 @@ service VolthaService {
     }
 
     // List image download db records for a given device
-    rpc ListImageDownloads(common.ID) returns(ImageDownloads) {
+    rpc ListImageDownloads(common_v2.ID) returns(ImageDownloads) {
         option (google.api.http) = {
             get: "/api/v1/devices/{id}/image_downloads"
         };
     }
 
     // Cancel an existing image download process on a device
-    rpc CancelImageDownload(ImageDownload) returns(common.OperationResp) {
+    rpc CancelImageDownload(ImageDownload) returns(common_v2.OperationResp) {
         option (google.api.http) = {
             delete: "/api/v1/devices/{id}/image_downloads/{name}"
         };
@@ -424,7 +424,7 @@ service VolthaService {
     // If no reboot, then a reboot is required to make the
     // activated image running on device
     // Note that the call is expected to be non-blocking.
-    rpc ActivateImageUpdate(ImageDownload) returns(common.OperationResp) {
+    rpc ActivateImageUpdate(ImageDownload) returns(common_v2.OperationResp) {
         option (google.api.http) = {
             post: "/api/v1/devices/{id}/image_downloads/{name}/image_update"
             body: "*"
@@ -438,7 +438,7 @@ service VolthaService {
     // If no reboot, then a reboot is required to make the
     // previous image running on device
     // Note that the call is expected to be non-blocking.
-    rpc RevertImageUpdate(ImageDownload) returns(common.OperationResp) {
+    rpc RevertImageUpdate(ImageDownload) returns(common_v2.OperationResp) {
         option (google.api.http) = {
             post: "/api/v1/devices/{id}/image_downloads/{name}/image_revert"
             body: "*"
@@ -446,22 +446,22 @@ service VolthaService {
     }
 
     // List ports of a device
-    rpc ListDevicePorts(common.ID) returns(Ports) {
+    rpc ListDevicePorts(common_v2.ID) returns(Ports) {
         option (google.api.http) = {
             get: "/api/v1/devices/{id}/ports"
         };
-        option (common.yang_xml_tag).xml_tag = 'ports';
+        option (common_v2.yang_xml_tag).xml_tag = 'ports';
     }
 
     // List pm config of a device
-    rpc ListDevicePmConfigs(common.ID) returns(PmConfigs) {
+    rpc ListDevicePmConfigs(common_v2.ID) returns(PmConfigs) {
         option (google.api.http) = {
             get: "/api/v1/devices/{id}/pm_configs"
         };
     }
 
     // Update the pm config of a device
-    rpc UpdateDevicePmConfigs(voltha.PmConfigs) returns(google.protobuf.Empty) {
+    rpc UpdateDevicePmConfigs(voltha_v2.PmConfigs) returns(google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/api/v1/devices/{id}/pm_configs"
             body: "*"
@@ -469,21 +469,21 @@ service VolthaService {
     }
 
     // List all flows of a device
-    rpc ListDeviceFlows(common.ID) returns(openflow_13.Flows) {
+    rpc ListDeviceFlows(common_v2.ID) returns(openflow_13_v2.Flows) {
         option (google.api.http) = {
             get: "/api/v1/devices/{id}/flows"
         };
-        option (common.yang_xml_tag).xml_tag = 'flows';
-        option (common.yang_xml_tag).list_items_name = 'items';
+        option (common_v2.yang_xml_tag).xml_tag = 'flows';
+        option (common_v2.yang_xml_tag).list_items_name = 'items';
     }
 
     // List all flow groups of a device
-    rpc ListDeviceFlowGroups(common.ID) returns(openflow_13.FlowGroups) {
+    rpc ListDeviceFlowGroups(common_v2.ID) returns(openflow_13_v2.FlowGroups) {
         option (google.api.http) = {
             get: "/api/v1/devices/{id}/flow_groups"
         };
-        option (common.yang_xml_tag).xml_tag = 'flow_groups';
-        option (common.yang_xml_tag).list_items_name = 'items';
+        option (common_v2.yang_xml_tag).xml_tag = 'flow_groups';
+        option (common_v2.yang_xml_tag).list_items_name = 'items';
     }
 
     // List device types known to Voltha
@@ -491,11 +491,11 @@ service VolthaService {
         option (google.api.http) = {
             get: "/api/v1/device_types"
         };
-        option (common.yang_xml_tag).xml_tag = 'device_types';
+        option (common_v2.yang_xml_tag).xml_tag = 'device_types';
     }
 
     // Get additional information on a device type
-    rpc GetDeviceType(common.ID) returns(DeviceType) {
+    rpc GetDeviceType(common_v2.ID) returns(DeviceType) {
         option (google.api.http) = {
             get: "/api/v1/device_types/{id}"
         };
@@ -506,28 +506,28 @@ service VolthaService {
         option (google.api.http) = {
             get: "/api/v1/device_groups"
         };
-        option (common.yang_xml_tag).xml_tag = 'device_groups';
+        option (common_v2.yang_xml_tag).xml_tag = 'device_groups';
     }
 
     // Stream control packets to the dataplane
-    rpc StreamPacketsOut(stream openflow_13.PacketOut)
+    rpc StreamPacketsOut(stream openflow_13_v2.PacketOut)
         returns(google.protobuf.Empty) {
         // This does not have an HTTP representation
     }
 
     // Receive control packet stream
     rpc ReceivePacketsIn(google.protobuf.Empty)
-        returns(stream openflow_13.PacketIn) {
+        returns(stream openflow_13_v2.PacketIn) {
         // This does not have an HTTP representation
     }
 
     rpc ReceiveChangeEvents(google.protobuf.Empty)
-        returns(stream openflow_13.ChangeEvent) {
+        returns(stream openflow_13_v2.ChangeEvent) {
         // This does not have an HTTP representation
     }
 
     // Get additional information on a device group
-    rpc GetDeviceGroup(common.ID) returns(DeviceGroup) {
+    rpc GetDeviceGroup(common_v2.ID) returns(DeviceGroup) {
         option (google.api.http) = {
             get: "/api/v1/device_groups/{id}"
         };
@@ -540,7 +540,7 @@ service VolthaService {
         };
     }
 
-    rpc GetAlarmFilter(common.ID) returns(AlarmFilter) {
+    rpc GetAlarmFilter(common_v2.ID) returns(AlarmFilter) {
         option (google.api.http) = {
             get: "/api/v1/alarm_filters/{id}"
         };
@@ -553,7 +553,7 @@ service VolthaService {
         };
     }
 
-    rpc DeleteAlarmFilter(common.ID) returns(google.protobuf.Empty) {
+    rpc DeleteAlarmFilter(common_v2.ID) returns(google.protobuf.Empty) {
         option (google.api.http) = {
             delete: "/api/v1/alarm_filters/{id}"
         };
@@ -565,34 +565,34 @@ service VolthaService {
         };
     }
 
-    rpc GetImages(common.ID) returns(Images) {
+    rpc GetImages(common_v2.ID) returns(Images) {
         option (google.api.http) = {
             get: "/api/v1/devices/{id}/images"
         };
     }
 
-    rpc SelfTest(common.ID) returns(SelfTestResponse) {
+    rpc SelfTest(common_v2.ID) returns(SelfTestResponse) {
         option (google.api.http) = {
             post: "/api/v1/devices/{id}/self_test"
         };
     }
 
     // OpenOMCI MIB information
-    rpc GetMibDeviceData(common.ID) returns(omci.MibDeviceData) {
+    rpc GetMibDeviceData(common_v2.ID) returns(omci_v2.MibDeviceData) {
         option (google.api.http) = {
             get: "/api/v1/openomci/{id}/mib"
         };
     }
 
     // OpenOMCI ALARM information
-    rpc GetAlarmDeviceData(common.ID) returns(omci.AlarmDeviceData) {
+    rpc GetAlarmDeviceData(common_v2.ID) returns(omci_v2.AlarmDeviceData) {
         option (google.api.http) = {
             get: "/api/v1/openomci/{id}/alarm"
         };
     }
 
     // Simulate an Alarm
-    rpc SimulateAlarm(SimulateAlarmRequest) returns(common.OperationResp) {
+    rpc SimulateAlarm(SimulateAlarmRequest) returns(common_v2.OperationResp) {
         option (google.api.http) = {
             post: "/api/v1/devices/{id}/simulate_larm"
             body: "*"

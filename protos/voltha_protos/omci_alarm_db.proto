@@ -17,43 +17,43 @@ syntax = "proto3";
 
 option go_package = "gopkg.in/dbainbri-ciena/voltha-protos.v2/go/omci";
 
-package omci;
+package omci_v2;
 
 import "voltha_protos/meta.proto";
 
 
 message AlarmAttributeData {
-    string name        = 1 [(voltha.access) = READ_ONLY];
+    string name        = 1 [(voltha_v2.access) = READ_ONLY];
     string value       = 2;
 }
 
 message AlarmInstanceData {
-    uint32 instance_id      = 1 [(voltha.access) = READ_ONLY];
+    uint32 instance_id      = 1 [(voltha_v2.access) = READ_ONLY];
     string created          = 2;
     string modified         = 3;
 
     repeated AlarmAttributeData attributes = 4
-    [(voltha.child_node) = {key: "name"}];
+    [(voltha_v2.child_node) = {key: "name"}];
 }
 
 message AlarmClassData {
-    uint32 class_id         = 1 [(voltha.access) = READ_ONLY];
+    uint32 class_id         = 1 [(voltha_v2.access) = READ_ONLY];
 
     repeated AlarmInstanceData instances= 2
-    [(voltha.child_node) = {key: "instance_id"}];
+    [(voltha_v2.child_node) = {key: "instance_id"}];
 }
 
 message AlarmManagedEntity {
-    uint32 class_id  = 1 [(voltha.access) = READ_ONLY];
-    string name      = 2 [(voltha.access) = READ_ONLY];
+    uint32 class_id  = 1 [(voltha_v2.access) = READ_ONLY];
+    string name      = 2 [(voltha_v2.access) = READ_ONLY];
 }
 
 message AlarmMessageType {
-    uint32 message_type = 1 [(voltha.access) = READ_ONLY];
+    uint32 message_type = 1 [(voltha_v2.access) = READ_ONLY];
 }
 
 message AlarmDeviceData {
-    string device_id             = 1 [(voltha.access) = READ_ONLY];
+    string device_id             = 1 [(voltha_v2.access) = READ_ONLY];
     string created               = 2;
     uint32 last_alarm_sequence   = 3;
     string last_sync_time        = 4;
@@ -61,7 +61,7 @@ message AlarmDeviceData {
 
 
     repeated AlarmClassData classes = 6
-    [(voltha.child_node) = {key: "class_id"}];
+    [(voltha_v2.child_node) = {key: "class_id"}];
 
     repeated AlarmManagedEntity managed_entities = 7;
     repeated AlarmMessageType message_types = 8;

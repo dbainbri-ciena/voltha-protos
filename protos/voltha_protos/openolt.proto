@@ -16,7 +16,7 @@ syntax = "proto3";
 
 option go_package = "gopkg.in/dbainbri-ciena/voltha-protos.v2/go/openolt";
 
-package openolt;
+package openolt_v2;
 import "google/api/annotations.proto";
 
 service Openolt {

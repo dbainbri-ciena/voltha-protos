@@ -2,7 +2,7 @@ syntax = "proto3";
 
 option go_package = "gopkg.in/dbainbri-ciena/voltha-protos.v2/go/voltha";
 
-package voltha;
+package voltha_v2;
 
 import "google/protobuf/empty.proto";
 import "voltha_protos/openflow_13.proto";
@@ -20,7 +20,7 @@ message PonSimDeviceInfo {
 
 message FlowTable {
     int32 port = 1;  // Used to address right device
-    repeated openflow_13.ofp_flow_stats flows = 2;
+    repeated openflow_13_v2.ofp_flow_stats flows = 2;
 }
 
 message PonSimFrame {

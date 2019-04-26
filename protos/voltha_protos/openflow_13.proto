@@ -59,7 +59,7 @@ syntax = "proto3";
 
 option go_package = "gopkg.in/dbainbri-ciena/voltha-protos.v2/go/openflow_13";
 
-package openflow_13;
+package openflow_13_v2;
 
 import "google/api/annotations.proto";
 import public "voltha_protos/yang_options.proto";
@@ -2023,8 +2023,8 @@ message ofp_group_desc {
 };
 
 message ofp_group_entry {
-    ofp_group_desc desc = 1 [(common.yang_inline_node).id = 'desc',
-                            (common.yang_inline_node).type = 'openflow_13-ofp_group_desc'];
+    ofp_group_desc desc = 1 [(common_v2.yang_inline_node).id = 'desc',
+                            (common_v2.yang_inline_node).type = 'openflow_13-ofp_group_desc'];
     ofp_group_stats stats = 2;
 };
 

@@ -2,7 +2,7 @@ syntax = "proto3";
 
 option go_package = "gopkg.in/dbainbri-ciena/voltha-protos.v2/go/voltha";
 
-package voltha;
+package voltha_v2;
 
 import "google/protobuf/any.proto";
 import "voltha_protos/common.proto";
@@ -100,7 +100,7 @@ message Images {
 }
 
 message ImageDownload {
-    option (common.yang_child_rule) = MOVE_TO_PARENT_LEVEL;
+    option (common_v2.yang_child_rule) = MOVE_TO_PARENT_LEVEL;
 
     enum ImageDownloadState {
         DOWNLOAD_UNKNOWN = 0;
@@ -176,7 +176,7 @@ message ImageDownloads {
 }
 
 message Port {
-    option (common.yang_child_rule) = MOVE_TO_PARENT_LEVEL;
+    option (common_v2.yang_child_rule) = MOVE_TO_PARENT_LEVEL;
 
     enum PortType {
         UNKNOWN = 0;
@@ -194,9 +194,9 @@ message Port {
 
     PortType type = 3;  //  Type of port
 
-    common.AdminState.AdminState admin_state = 5;
+    common_v2.AdminState.AdminState admin_state = 5;
 
-    common.OperStatus.OperStatus oper_status = 6;
+    common_v2.OperStatus.OperStatus oper_status = 6;
 
     string device_id = 7;  // Unique .id of device that owns this port
 
@@ -221,7 +221,7 @@ message Ports {
 
 // A Physical Device instance
 message Device {
-    option (common.yang_child_rule) = MOVE_TO_PARENT_LEVEL;
+    option (common_v2.yang_child_rule) = MOVE_TO_PARENT_LEVEL;
 
     // Voltha's device identifier
     string id = 1 [(access) = READ_ONLY];
@@ -283,13 +283,13 @@ message Device {
 
     ProxyAddress proxy_address = 19;
 
-    common.AdminState.AdminState admin_state = 16;
+    common_v2.AdminState.AdminState admin_state = 16;
 
-    common.OperStatus.OperStatus oper_status = 17 [(access) = READ_ONLY];
+    common_v2.OperStatus.OperStatus oper_status = 17 [(access) = READ_ONLY];
 
     string reason = 22 [(access) = READ_ONLY];  //  Used in FAILED state
 
-    common.ConnectStatus.ConnectStatus connect_status = 18 [(access) = READ_ONLY];
+    common_v2.ConnectStatus.ConnectStatus connect_status = 18 [(access) = READ_ONLY];
 
     // TODO additional common attribute here
 
@@ -297,8 +297,8 @@ message Device {
     google.protobuf.Any custom = 64;
 
     repeated Port ports = 128  [(child_node) = {key: "port_no"}];
-    openflow_13.Flows flows = 129 [(child_node) = {}];
-    openflow_13.FlowGroups flow_groups = 130 [(child_node) = {}];
+    openflow_13_v2.Flows flows = 129 [(child_node) = {}];
+    openflow_13_v2.FlowGroups flow_groups = 130 [(child_node) = {}];
     // PmConfigs will eventually converted to a child node of the
     // device to falicitata callbacks and to simplify manipulation.
     PmConfigs pm_configs = 131 [(child_node) = {}];

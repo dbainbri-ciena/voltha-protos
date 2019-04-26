@@ -2,7 +2,7 @@ syntax = "proto3";
 
 option go_package = "gopkg.in/dbainbri-ciena/voltha-protos.v2/go/ietf";
 
-package ietf;
+package ietf_v2;
 
 message Interfaces {
     repeated Interface all_interfaces = 1;

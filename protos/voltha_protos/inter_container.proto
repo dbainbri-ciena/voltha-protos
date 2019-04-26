@@ -6,7 +6,7 @@ import "google/protobuf/any.proto";
 import "voltha_protos/openflow_13.proto";
 import public "voltha_protos/logical_device.proto";
 
-package voltha;
+package voltha_v2;
 
 message StrType {
     string val = 1;
@@ -74,8 +74,8 @@ message InterContainerResponseBody {
 }
 
 message SwitchCapability {
-    openflow_13.ofp_desc desc = 1;
-    openflow_13.ofp_switch_features switch_features = 2;
+    openflow_13_v2.ofp_desc desc = 1;
+    openflow_13_v2.ofp_switch_features switch_features = 2;
 }
 
 message PortCapability {

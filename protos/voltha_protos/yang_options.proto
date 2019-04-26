@@ -19,7 +19,7 @@ syntax = "proto3";
 
 option go_package = "gopkg.in/dbainbri-ciena/voltha-protos.v2/go/common";
 
-package common;
+package common_v2;
 
 import "google/protobuf/descriptor.proto";
 
